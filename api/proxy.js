@@ -2,28 +2,28 @@
 
 // 域名映射配置
 const domain_mappings = {
-  'github.com': 'v-gh.',
-  'avatars.githubusercontent.com': 'v-avatars-githubusercontent-com.',
-  'github.githubassets.com': 'v-github-githubassets-com.',
-  'collector.github.com': 'v-collector-github-com.',
-  'api.github.com': 'v-api-github-com.',
-  'raw.githubusercontent.com': 'v-raw-githubusercontent-com.',
-  'gist.githubusercontent.com': 'v-gist-githubusercontent-com.',
-  'github.io': 'v-github-io.',
-  'assets-cdn.github.com': 'v-assets-cdn-github-com.',
-  'cdn.jsdelivr.net': 'v-cdn.jsdelivr-net.',
-  'securitylab.github.com': 'v-securitylab-github-com.',
-  'www.githubstatus.com': 'v-www-githubstatus-com.',
-  'npmjs.com': 'v-npmjs-com.',
-  'git-lfs.github.com': 'v-git-lfs-github-com.',
-  'githubusercontent.com': 'v-githubusercontent-com.',
-  'github.global.ssl.fastly.net': 'v-github-global-ssl-fastly-net.',
-  'api.npms.io': 'v-api-npms-io.',
-  'github.community': 'v-github-community.'
+  'github.com': 'gh.',
+  'avatars.githubusercontent.com': 'avatars-githubusercontent-com.',
+  'github.githubassets.com': 'github-githubassets-com.',
+  'collector.github.com': 'collector-github-com.',
+  'api.github.com': 'api-github-com.',
+  'raw.githubusercontent.com': 'raw-githubusercontent-com.',
+  'gist.githubusercontent.com': 'gist-githubusercontent-com.',
+  'github.io': 'github-io.',
+  'assets-cdn.github.com': 'assets-cdn-github-com.',
+  'cdn.jsdelivr.net': 'cdn.jsdelivr-net.',
+  'securitylab.github.com': 'securitylab-github-com.',
+  'www.githubstatus.com': 'www-githubstatus-com.',
+  'npmjs.com': 'npmjs-com.',
+  'git-lfs.github.com': 'git-lfs-github-com.',
+  'githubusercontent.com': 'githubusercontent-com.',
+  'github.global.ssl.fastly.net': 'github-global-ssl-fastly-net.',
+  'api.npms.io': 'api-npms-io.',
+  'github.community': 'github-community.'
 };
 
 // 需要重定向的路径
-const redirect_paths = ['/', '/login', '/signup', '/copilot'];
+const redirect_paths = ['/login', '/signup', '/copilot'];
 
 // 获取当前主机名的前缀，用于匹配反向映射
 function getProxyPrefix(host) {
@@ -93,6 +93,17 @@ export default async function handler(req, res) {
   try {
     const url = new URL(req.url, `https://${req.headers.host}`);
     const current_host = req.headers.host || url.host;
+    
+    // 添加鉴权逻辑
+    if (url.pathname === '/') {
+      return res.status(404).send('Access Forbidden');
+    }
+    
+    // 特殊路径 /peroe 允许访问
+    if (url.pathname === '/peroe') {
+      // 重写路径为根路径以便正常处理
+      url.pathname = '/';
+    }
     
     // 检测Host头，优先使用Host头中的域名来决定后缀
     const effective_host = req.headers.host || current_host;
