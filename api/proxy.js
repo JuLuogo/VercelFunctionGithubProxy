@@ -2,10 +2,9 @@
 
 // 域名映射配置
 const domain_mappings = {
-  'searx.stream': 's.',
   'zh.wikipedia.org': 'wj.',
-  'upload.wikimedia.org': 'upload.',
-  'meta.wikimedia.org': 'meta.',
+  'upload.wikimedia.org': 'upload-wikimedia-org.',
+  'meta.wikimedia.org': 'meta-wikimedia-org.',
 };
 
 // 需要重定向的路径
