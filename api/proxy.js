@@ -3,9 +3,9 @@
 // 域名映射配置
 const domain_mappings = {
   'searx.stream': 's.',
-  'www.google.com': 'goo.',
-  'www.gstatic.com': 'www-gstatic-com.',
-  'play.google.com': 'play.',
+  'zh.wikipedia.org': 'wj.',
+  'upload.wikimedia.org': 'upload.',
+  'meta.wikimedia.org': 'meta.',
 };
 
 // 需要重定向的路径
